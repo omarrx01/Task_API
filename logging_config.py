@@ -9,7 +9,8 @@ def setup_logger():
     log_file = log_dir / "app.log"
 
     logger = logging.getLogger("task_api")
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = False
 
     if not logger.handlers:
         formatter = logging.Formatter(
@@ -18,9 +19,11 @@ def setup_logger():
         )
 
         file_handler = logging.FileHandler(log_file, encoding="utf-8")
+        file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(formatter)
 
         console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
         console_handler.setFormatter(formatter)
 
         logger.addHandler(file_handler)
